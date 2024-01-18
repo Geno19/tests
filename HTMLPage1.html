@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeting Website with Live Time</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 5vw; /* Responsive padding based on viewport width */
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+            body.dark-mode {
+                background-color: #333;
+                color: #fff;
+            }
+
+        #greeting-container {
+            margin-top: 5vw;
+        }
+
+        #cookies-popup {
+            position: fixed;
+            bottom: 5vw;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5vw;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #accept-cookies-btn,
+        #reject-cookies-btn,
+        #toggle-dark-mode {
+            margin-top: 5vw;
+            padding: 2vw 5vw;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to Geno's Greeting Website!</h1>
+
+    <!-- Cookies Popup -->
+    <div id="cookies-popup">
+        This website uses cookies to store your name.
+        <button id="accept-cookies-btn">Accept</button>
+        <button id="reject-cookies-btn">I don't want this</button>
+    </div>
+
+    <div id="greeting-container">
+        <p id="greeting"></p>
+        <p id="current-time"></p>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button id="toggle-dark-mode">Toggle Dark Mode</button>
+
+    <script>// Function to get the saved name from a cookie
+      function getSavedNameFromCookie() {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              if (cookie.indexOf("savedName=") === 0) {
+                  return decodeURIComponent(cookie.substring("savedName=".length, cookie.length));
+              }
+          }
+          return null;
+      }
+
+      // Function to hide the cookies popup
+      function hideCookiesPopup() {
+          document.getElementById("cookies-popup").style.display = "none";
+      }
+
+      // Ask the user for cookie consent
+      if (!getSavedNameFromCookie()) {
+          document.getElementById("cookies-popup").style.display = "block";
+
+          // Accept cookies
+          document.getElementById("accept-cookies-btn").addEventListener("click", function() {
+              hideCookiesPopup();
+              var name = prompt("What is your name?");
+              if (name) {
+                  document.getElementById("greeting").innerHTML = "Hello, " + name + "! Welcome to our website.";
+              } else {
+                  document.getElementById("greeting").innerHTML = "Hello there! Welcome to our website.";
+              }
+          });
+
+          // Reject cookies
+          document.getElementById("reject-cookies-btn").addEventListener("click", function() {
+              hideCookiesPopup();
+              document.getElementById("greeting").innerHTML = ":(";
+          });
+      } else {
+          hideCookiesPopup();
+          var name = getSavedNameFromCookie();
+          document.getElementById("greeting").innerHTML = "Hello, " + name + "! Welcome to our website.";
+      }
+
+      // Function to toggle dark mode
+      function toggleDarkMode() {
+          var body = document.body;
+          body.classList.toggle("dark-mode");
+      }
+
+      // Add an event listener to the dark mode toggle button
+      document.getElementById("toggle-dark-mode").addEventListener("click", toggleDarkMode);
+
+      // Update the time every second
+      function updateClock() {
+          var currentDate = new Date();
+          var formattedTime = currentDate.toLocaleTimeString();
+          document.getElementById("current-time").innerHTML = "It is currently " + formattedTime + ".";
+      }
+
+      // Call updateClock every second
+      setInterval(updateClock, 1000);
+
+      // Call updateClock immediately to display the time right away
+      updateClock();</script>
+
+</body>
+</html>
