@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            padding: 5vw; /* Responsive padding based on viewport width */
+            padding: 5vw;
             background-color: #f4f4f4;
             color: #333;
             transition: background-color 0.5s, color 0.5s;
@@ -52,7 +52,6 @@
 
     <h1>Welcome to Geno's Greeting Website!</h1>
 
-    <!-- Cookies Popup -->
     <div id="cookies-popup">
         This website uses cookies to store your name.
         <button id="accept-cookies-btn">Accept</button>
@@ -64,10 +63,9 @@
         <p id="current-time"></p>
     </div>
 
-    <!-- Dark Mode Toggle -->
     <button id="toggle-dark-mode">Toggle Dark Mode</button>
 
-    <script>// Function to get the saved name from a cookie
+    <script>
       function getSavedNameFromCookie() {
           var cookies = document.cookie.split(';');
           for (var i = 0; i < cookies.length; i++) {
@@ -79,16 +77,13 @@
           return null;
       }
 
-      // Function to hide the cookies popup
       function hideCookiesPopup() {
           document.getElementById("cookies-popup").style.display = "none";
       }
 
-      // Ask the user for cookie consent
       if (!getSavedNameFromCookie()) {
           document.getElementById("cookies-popup").style.display = "block";
 
-          // Accept cookies
           document.getElementById("accept-cookies-btn").addEventListener("click", function() {
               hideCookiesPopup();
               var name = prompt("What is your name?");
@@ -99,7 +94,6 @@
               }
           });
 
-          // Reject cookies
           document.getElementById("reject-cookies-btn").addEventListener("click", function() {
               hideCookiesPopup();
               document.getElementById("greeting").innerHTML = ":(";
@@ -110,26 +104,21 @@
           document.getElementById("greeting").innerHTML = "Hello, " + name + "! Welcome to our website.";
       }
 
-      // Function to toggle dark mode
       function toggleDarkMode() {
           var body = document.body;
           body.classList.toggle("dark-mode");
       }
 
-      // Add an event listener to the dark mode toggle button
       document.getElementById("toggle-dark-mode").addEventListener("click", toggleDarkMode);
 
-      // Update the time every second
       function updateClock() {
           var currentDate = new Date();
           var formattedTime = currentDate.toLocaleTimeString();
           document.getElementById("current-time").innerHTML = "It is currently " + formattedTime + ".";
       }
 
-      // Call updateClock every second
       setInterval(updateClock, 1000);
 
-      // Call updateClock immediately to display the time right away
       updateClock();</script>
 
 </body>
